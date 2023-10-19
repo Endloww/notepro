@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes évals{% endblock %}
+
+{% block body %}
+    <h1>Mes évals</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Label</th>
+            <th scope="col">Catégorie</th>
+            <th scope="col">Moyenne</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for eval in evals %}
+            <tr>
+                <td>{{ eval.label }}</td>
+                <td>{{ eval.category.name }}</td>
+                <td>
+                    {% if eval.moyenne() is not null %}
+                        {{ eval.moyenne() }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('app_evaluation_set_grades', {id: eval.id}) }}"><button class="btn btn-secondary">Notes</button></a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evaluation_new') }}">Créer une nouvelle évaluation</a>
+{% endblock %}
